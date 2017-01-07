@@ -6,7 +6,7 @@ It controls DMX enabled light via FTDI-DMX interface.
 
 My setup is PC -> DMXPipe -> SOUNDSATION PAR64B-ENTRY
 
-![Ambilight in action](github.com/argorain/dmx-ambilight/blob/master/images/output.gif)
+![Ambilight in action](images/output.gif)
 
 ## Requiremnts
 - Linux
