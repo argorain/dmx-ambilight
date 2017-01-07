@@ -1,8 +1,12 @@
 # Ambilight
 
 Ambient light control based on computer screen color.
+
 It controls DMX enabled light via FTDI-DMX interface.
+
 My setup is PC -> DMXPipe -> SOUNDSATION PAR64B-ENTRY
+
+![Ambilight in action](https://github.com/argorain/dmx-ambilight/tree/master/images/output.gif)
 
 ## Requiremnts
 - Linux
