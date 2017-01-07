@@ -12,24 +12,24 @@ My setup is PC -> DMXPipe -> SOUNDSATION PAR64B-ENTRY
 
 ## Building
 1. Create directory build within project folder
-    
+```    
     mkdir build
-
+```
 2. Go there
-    
+```    
     cd build
-
+```
 3. Cmake it
-    
+```    
     cmake ..
-
+```
 4. Build it
-    
+```    
     make
-
+```
 5. Use it!
-    
+```    
     ./ambilight
-
+```
 
 Good luck!
