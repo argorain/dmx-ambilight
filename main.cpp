@@ -6,7 +6,11 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
+#include <list>
 
+#define AVGS 6 //How many samples from history is going to be used
+
+using namespace std;
 
 int main()
 {
@@ -22,6 +26,12 @@ int main()
     unsigned char c = 0;
     struct ftdi_context ftdic;
     unsigned char buffer[513];
+    
+    // Create history lists
+    list<unsigned char> redLongA;
+    list<unsigned char> greenLongA;
+    list<unsigned char> blueLongA;
+    
 
     memset(buffer, 0, 513);
 
@@ -83,9 +93,38 @@ int main()
 
             XDestroyImage(image);
 
+            // Image average
             redA = redA/(width*height);
             blueA = blueA/(width*height);
             greenA = greenA/(width*height);
+
+            // Store those values for averaging to avoid flickering
+            redLongA.push_front(redA);
+            blueLongA.push_front(blueA);
+            greenLongA.push_front(greenA);
+            redA = blueA = greenA = 0;  
+
+            // Sum history
+            for (list<unsigned char>::iterator it=redLongA.begin(); it != redLongA.end(); ++it)
+                redA += *it;
+            
+            for (list<unsigned char>::iterator it=greenLongA.begin(); it != greenLongA.end(); ++it)
+                greenA += *it;
+            
+            for (list<unsigned char>::iterator it=blueLongA.begin(); it != blueLongA.end(); ++it)
+                blueA += *it;
+           
+            // Average history
+            redA = redA/redLongA.size();
+            greenA = greenA/greenLongA.size();
+            blueA = blueA/blueLongA.size();
+
+            // Remove oldests
+            if(redLongA.size() >= AVGS) {
+                redLongA.pop_back();
+                greenLongA.pop_back();
+                blueLongA.pop_back();
+            }
 
             // My light have RGB channels on address 4,5,6.
             // There is cubic function with normalization to make colors more vibrant
